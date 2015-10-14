@@ -1,0 +1,29 @@
+{
+  "name": "caritat",
+  "version": "0.0.0",
+  "authors": [
+    "Herbert Snorrason <odin@anarchism.is>"
+  ],
+  "description": "Election counting method library",
+  "main": "caritat.js",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "condorcet",
+    "election",
+    "voting"
+  ],
+  "license": "CC0-1.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "~3.10.1"
+  }
+}

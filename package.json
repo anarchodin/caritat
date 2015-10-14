@@ -1,0 +1,20 @@
+{
+  "name": "caritat",
+  "version": "0.0.0",
+  "description": "Election counting method library",
+  "main": "caritat.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "condorcet",
+    "voting"
+  ],
+  "author": "Herbert Snorrason",
+  "license": "CC0-1.0",
+  "dependencies": {
+    "amdefine": "^1.0.0",
+    "lodash": "^3.10.1",
+    "requirejs": "^2.1.20"
+  }
+}
