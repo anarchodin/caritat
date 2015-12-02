@@ -1,5 +1,5 @@
-define(["ballot", "condorcet", "plurality", "irv", "borda", "utils"],
-function (Ballot, condorcet, plurality, irv, borda, utils) {
+define(["ballot", "condorcet", "plurality", "irv", "borda", "stv", "utils"],
+function (Ballot, condorcet, plurality, irv, borda, stv, utils) {
 
 return {
   Ballot: Ballot,

@@ -46,4 +46,4 @@ console.log("IRV winner: " + caritat.irv(Tennessee, candidates));
 console.log("Schulze result: " + JSON.stringify(caritat.condorcet.schulze(Tennessee, candidates)));
 console.log("Borda result: " + JSON.stringify(caritat.borda(Tennessee, candidates)));
 
-console.log("Meek test:\n" + JSON.stringify(caritat.stv.meek(Tennessee, {candidates: candidates, seats: 2})));
+console.log("Meek test:\n" + JSON.stringify(caritat.stv.meek(Tennessee, {candidates: candidates, seats: 1})));
