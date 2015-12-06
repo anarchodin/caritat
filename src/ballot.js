@@ -38,13 +38,16 @@ Ballot.prototype.isValid = function isValid (config) {
     if (_.some(this.votes, _.isArray)) return false;
   }
 
+  if (!!config.maxCandidates) {
+    if (_.size(this.votes) > config.maxCandidates) return false;
+  }
 
   return true;
 };
 
 function ballotToRanks (ballot) {
   var result;
-  
+
   result =  _.reduce(ballot, function (result, candidate, rank) {
     if (_.isString(candidate)) {
       result[candidate] = rank;
