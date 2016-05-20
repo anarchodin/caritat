@@ -1,4 +1,6 @@
-define(["lodash", "utils"], function (_, utils) {
+import _ from 'lodash';
+
+import {countFirstPrefs} from './utils';
 
 function irv (ballots, candidates) {
   "use strict";
@@ -8,8 +10,8 @@ function irv (ballots, candidates) {
   curCandidates = candidates;
 
   while (true) {
-    voteCount = _.sum(curBallots, 'count');
-    firstPrefs = utils.countFirstPrefs(curBallots, curCandidates);
+    voteCount = _.sumBy(curBallots, 'count');
+    firstPrefs = countFirstPrefs(curBallots, curCandidates);
     ratios = _.mapValues(firstPrefs, function (votes) {
       return votes / voteCount;
     });
@@ -17,12 +19,8 @@ function irv (ballots, candidates) {
     winner = _.findKey(ratios, function (x) {return x > 0.5; });
     if (!!winner) return winner;
 
-    loser = _(firstPrefs).pairs().map(function (pair) {
-      return {
-        name: pair[0],
-        votes: pair[1]
-      };
-    }).sortBy('votes').pluck('name').first();
+    loser = _.map(_.orderBy(_.toPairs(firstPrefs), x => { return x[1] }, ['asc']), x => { return x[0] })[0];
+
     curBallots = _.compact(_.map(curBallots, function (ballot) {
       return ballot.eliminate(loser);
     }));
@@ -31,6 +29,4 @@ function irv (ballots, candidates) {
   }
 }
 
-return irv;
-
-});
+export default irv;

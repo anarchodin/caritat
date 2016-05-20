@@ -1,10 +1,9 @@
-define(["lodash", "condorcet/common", "condorcet/schulze"], function (_, common, schulze) {
+import _ from 'lodash';
 
-var condorcet = {
-  schulze: schulze
-};
+import * as common from './condorcet/common';
+import schulze from './condorcet/schulze';
 
-condorcet.winner = function condorcetWinner (ballots, candidates) {
+export function winner (ballots, candidates) {
   var winPairs = common.ballotArrayToPairs(ballots, candidates);
   var isWinner = Object.create(null);
   _.forEach(candidates, function (first) {
@@ -28,6 +27,4 @@ condorcet.winner = function condorcetWinner (ballots, candidates) {
   }
 };
 
-return condorcet;
-
-});
+export {common, schulze};

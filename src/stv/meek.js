@@ -1,4 +1,4 @@
-define(["lodash"], function (_) {
+import _ from 'lodash';
 
 function countVotes (oldState, ballots) {
   var state = _.cloneDeep(oldState);
@@ -53,7 +53,7 @@ function updateWeights (oldState) {
 
 function isConverged (state) {
   var converged = true;
-  _.forEach(_.where(state.candidates, {status: 'elected'}), function (candidate) {
+  _.forEach(_.filter(state.candidates, {status: 'elected'}), function (candidate) {
     var ratio = state.quota / candidate.votes;
     if (ratio > 1.00001 || ratio < 0.9999) {
       converged = false;
@@ -69,19 +69,19 @@ function declareElected (oldState) {
   var someoneElected = false;
   var electAll = false;
 
-  var elected = _.pick(state.candidates, function (candidate) {
+  var elected = _.pickBy(state.candidates, function (candidate) {
     return candidate.status === 'elected';
   });
 
-  var hopefuls = _.pick(state.candidates, function (candidate) {
+  var hopefuls = _.pickBy(state.candidates, function (candidate) {
     return candidate.status === 'hopeful';
   });
 
-  if (state.seats == _.size(elected) + _.size(hopefuls)) {
+  if (state.seats === _.size(elected) + _.size(hopefuls)) {
     electAll = true;
   }
 
-  _.forEach(_.where(state.candidates, {status: 'hopeful'}), function (candidate) {
+  _.forEach(_.filter(state.candidates, {status: 'hopeful'}), function (candidate) {
     if (candidate.votes > state.quota || electAll) {
       someoneElected = true;
       candidate.status = 'elected';
@@ -97,23 +97,21 @@ function declareElected (oldState) {
 }
 
 function findLowest (state) {
-  var votes = _(state.candidates)
-      .pick(function (candidate) {
-        return candidate.status === 'hopeful';
-      })
-      .mapValues('votes').value();
+  var active = _.pickBy(state.candidates, candidate => {
+    return candidate.status === 'hopeful';
+  });
+
+  var votes = _.mapValues(active, 'votes');
 
   if (_.isEmpty(votes)) {
     throw "No hopefuls remain.";
   }
 
-  var lowestVote = _.min(votes);
+  var lowestVote = _.min(_.values(votes));
 
-  var retVal = _(votes)
-      .pick(function (votes) {
-        return votes == lowestVote;
-      })
-      .keys().value();
+  var retVal = _.keys(_.pickBy(active, cand => {
+    return cand.votes === lowestVote;
+  }));
 
   return retVal;
 }
@@ -188,6 +186,4 @@ function meek (ballots, config) {
   return retVal;
 }
 
-return meek;
-
-});
+export default meek;

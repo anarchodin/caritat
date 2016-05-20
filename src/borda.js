@@ -1,4 +1,4 @@
-define(["lodash"], function (_) {
+import _ from 'lodash';
 
 function bordaScore (ballot, candidates) {
   var scores = Object.create(null);
@@ -38,13 +38,10 @@ function scores (ballots, candidates) {
 }
 
 function borda (ballots, candidates) {
-  return _(scores(ballots, candidates))
-    .pairs()
-    .map(function (pair) { return { name: pair[0], score: pair[1]}; })
-    .sortByOrder('score', ['desc'])
-    .pluck('name').value();
+  var theScores = scores(ballots, candidates);
+
+  var sorted = _.orderBy(_.toPairs(theScores), x => { return x[1] }, ['desc']);
+  return _.map(sorted, x => { return x[0] });
 }
 
-return borda;
-
-});
+export default borda;

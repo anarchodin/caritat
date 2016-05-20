@@ -1,8 +1,6 @@
-define(["lodash"], function (_) {
+import _ from 'lodash';
 
-var common = {};
-
-function ballotToPairs (ballot, candidates) {
+export function ballotToPairs (ballot, candidates) {
   var voteWeight = ballot.count || 1;
   var ranks = ballot.ranks;
   var result = Object.create(null);
@@ -20,7 +18,7 @@ function ballotToPairs (ballot, candidates) {
   return result;
 }
 
-function ballotArrayToPairs (ballots, candidates) {
+export function ballotArrayToPairs (ballots, candidates) {
   var result = Object.create(null);
 
   _.forEach(candidates, function (first) {
@@ -41,10 +39,3 @@ function ballotArrayToPairs (ballots, candidates) {
 
   return result;
 }
-
-common.ballotToPairs = ballotToPairs;
-common.ballotArrayToPairs = ballotArrayToPairs;
-
-return common;
-
-});

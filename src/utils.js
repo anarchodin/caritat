@@ -1,8 +1,6 @@
-define(["lodash"], function (_) {
+import _ from 'lodash';
 
-var utils = {};
-
-utils.countFirstPrefs = function (ballots, candidates) {
+export function countFirstPrefs (ballots, candidates) {
   var firstPrefs = Object.create(null);
 
   _.forEach(candidates, function (candidate) {
@@ -16,7 +14,3 @@ utils.countFirstPrefs = function (ballots, candidates) {
 
   return firstPrefs;
 }
-
-return utils;
-
-});

@@ -1,14 +1,12 @@
-define(["lodash", "utils"], function (_, utils) {
+import _ from 'lodash';
+import {countFirstPrefs} from './utils';
 
-function pluralityWinner (ballots, candidates) {
-  var firstPrefs = utils.countFirstPrefs(ballots, candidates);
+function winner (ballots, candidates) {
+  var firstPrefs = countFirstPrefs(ballots, candidates);
 
-  return _(firstPrefs).pairs()
-    .map(function (pair) { return { name: pair[0], votes: pair[1] }; })
-    .sortByOrder('votes', ['desc'])
-    .pluck('name').first();
+  var sorted = _.orderBy(_.toPairs(firstPrefs), x => { return x[1] }, ['desc']);
+
+  return _.map(sorted, x => { return x[0] })[0];
 }
 
-return pluralityWinner;
-
-});
+export default winner;

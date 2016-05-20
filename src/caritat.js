@@ -1,15 +1,13 @@
-define(["ballot", "condorcet", "plurality", "irv", "borda", "stv", "utils"],
-function (Ballot, condorcet, plurality, irv, borda, stv, utils) {
+import Ballot from './ballot';
+import * as condorcet from './condorcet';
+import plurality from './plurality';
+import irv from './irv';
+import borda from './borda';
+import * as stv from './stv';
 
-return {
-  Ballot: Ballot,
-  condorcet: condorcet,
-  plurality: plurality,
-  irv: irv,
-  borda: borda,
-  stv: stv,
+import * as utils from './utils';
 
-  utils: utils
-};
+export {Ballot, condorcet, plurality, irv, borda, stv, utils};
 
-});
+//define(["ballot", "condorcet", "plurality", "irv", "borda", "stv", "utils"],
+//function (Ballot, condorcet, plurality, irv, borda, stv, utils) {

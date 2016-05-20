@@ -1,5 +1,3 @@
-define(["stv/meek"], function (meek) {
-  return {
-    meek: meek
-  };
-});
+import meek from './stv/meek';
+
+export { meek };

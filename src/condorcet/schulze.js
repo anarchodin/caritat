@@ -1,6 +1,8 @@
-define(["lodash", "./common"], function (_, common) {
+import _ from 'lodash';
 
-function pairsToStrongestPaths(pairs, candidates) {
+import {ballotArrayToPairs} from './common';
+
+export function pairsToStrongestPaths(pairs, candidates) {
   var paths = Object.create(null);
   var result = _.clone(candidates);
 
@@ -35,12 +37,10 @@ function pairsToStrongestPaths(pairs, candidates) {
 }
 
 function schulze (ballots, candidates) {
-  var pairs = common.ballotArrayToPairs(ballots, candidates);
+  var pairs = ballotArrayToPairs(ballots, candidates);
   var paths = pairsToStrongestPaths(pairs, candidates);
 
   return paths;
 }
 
-return schulze;
-
-});
+export default schulze;

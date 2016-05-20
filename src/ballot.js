@@ -1,16 +1,16 @@
-define(['lodash'], function (_) {
+import _ from 'lodash';
 
 function Ballot (votes, count) {
   this.votes = _.cloneDeep(votes);
   this.ranks = ballotToRanks(votes);
-  this.candidates = _(votes).uniq().value();
+  this.candidates = _.uniq(votes);
   this.count = count || 1;
 }
 
 Ballot.prototype.eliminate = function eliminate (candidate) {
   if (!_.isString(candidate)) return this;
 
-  var newVotes = _(this.votes).map(function (entry) {
+  var newVotes = _.compact(_.map(this.votes, function (entry) {
     if (entry === candidate) {
       return false;
     } else if (_.isArray(entry)) {
@@ -18,7 +18,7 @@ Ballot.prototype.eliminate = function eliminate (candidate) {
     } else {
       return entry;
     }
-  }).compact().value();
+  }));
 
   return new Ballot(newVotes, this.count);
 }
@@ -63,6 +63,4 @@ function ballotToRanks (ballot) {
   return result;
 }
 
-return Ballot;
-
-});
+export default Ballot;
