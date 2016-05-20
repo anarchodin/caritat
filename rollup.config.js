@@ -3,8 +3,9 @@ import npm from 'rollup-plugin-node-resolve';
 
 export default {
   entry: 'src/caritat.js',
-  dest: 'dist/caritat.js',
-  format: 'cjs',
+  dest: 'index.js',
+  format: 'umd',
+  moduleName: 'caritat',
   plugins: [
     npm(),
     babel({'plugins': [['lodash', {"id": "lodash-es"}]]})
