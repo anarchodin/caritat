@@ -160,7 +160,7 @@ function meek (ballots, config) {
   state.seats = config.seats;
 
   state.excess = 0;
-  state.totalVotes = _.sum(ballots, "count");
+  state.totalVotes = _.sumBy(ballots, "count");
   state.droopFactor = 1 / (config.seats + 1);
   state.quota = state.totalVotes * state.droopFactor;
   state.electedCount = 0;
@@ -171,7 +171,7 @@ function meek (ballots, config) {
       state = updateWeights(state);
     } while (!isConverged(state));
     state = declareElected(state) || eliminateLowest(state);
-    log.push(state);
+    log.push(_.cloneDeep(state));
   }
 
   retVal = _.filter(_.keys(state.candidates), function (candidate) {
