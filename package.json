@@ -4,12 +4,14 @@
   "description": "Election counting method library",
   "main": "index.js",
   "scripts": {
+    "prepublish": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "condorcet",
     "voting"
   ],
+  "repository": "anarchodin/caritat",
   "author": "Herbert Snorrason",
   "license": "CC0-1.0",
   "dependencies": {
