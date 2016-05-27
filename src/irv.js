@@ -2,12 +2,12 @@ import _ from 'lodash';
 
 import {countFirstPrefs} from './utils';
 
-function irv (ballots, candidates) {
+function irv (election) {
   "use strict";
   var curBallots, curCandidates, voteCount, firstPrefs, ratios, winner, loser;
 
-  curBallots = ballots;
-  curCandidates = candidates;
+  curBallots = election.ballots;
+  curCandidates = election.candidates;
 
   while (true) {
     voteCount = _.sumBy(curBallots, 'count');

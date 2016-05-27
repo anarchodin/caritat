@@ -36,7 +36,10 @@ export function pairsToStrongestPaths(pairs, candidates) {
   return result;
 }
 
-function schulze (ballots, candidates) {
+function schulze (election) {
+  let ballots = election.ballots;
+  let candidates = election.candidates;
+
   var pairs = ballotArrayToPairs(ballots, candidates);
   var paths = pairsToStrongestPaths(pairs, candidates);
 

@@ -1,4 +1,5 @@
 import Ballot from './ballot';
+import Election from './election';
 import * as condorcet from './condorcet';
 import plurality from './plurality';
 import irv from './irv';
@@ -7,7 +8,7 @@ import * as stv from './stv';
 
 import * as utils from './utils';
 
-export {Ballot, condorcet, plurality, irv, borda, stv, utils};
+export {Ballot, Election, condorcet, plurality, irv, borda, stv, utils};
 
 //define(["ballot", "condorcet", "plurality", "irv", "borda", "stv", "utils"],
 //function (Ballot, condorcet, plurality, irv, borda, stv, utils) {

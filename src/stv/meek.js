@@ -142,13 +142,15 @@ function eliminateLowest (state) {
   return eliminate(state, lowestCandidate);
 }
   
-function meek (ballots, config) {
+function meek (election, config) {
+  let ballots = election.ballots;
+
   var retVal;
   var log = [];
   var state = Object.create(null);
   state.candidates = Object.create(null);
 
-  _.forEach(config.candidates, function (candidate) {
+  _.forEach(election.candidates, function (candidate) {
     state.candidates[candidate] = {
       status: 'hopeful',
       votes: 0,

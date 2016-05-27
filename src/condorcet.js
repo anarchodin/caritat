@@ -3,7 +3,10 @@ import _ from 'lodash';
 import * as common from './condorcet/common';
 import schulze from './condorcet/schulze';
 
-export function winner (ballots, candidates) {
+export function winner (election) {
+  let ballots = election.ballots;
+  let candidates = election.candidates;
+
   var winPairs = common.ballotArrayToPairs(ballots, candidates);
   var isWinner = Object.create(null);
   _.forEach(candidates, function (first) {

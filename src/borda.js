@@ -1,6 +1,9 @@
 import _ from 'lodash';
 
-function bordaScore (ballot, candidates) {
+function bordaScore (election) {
+  let ballots = election.ballots;
+  let candidates = election.candidates;
+
   var scores = Object.create(null);
   var maxScore = candidates.length - 1;
 
