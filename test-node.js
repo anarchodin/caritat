@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var caritat = require('./dist/caritat.js');
+var caritat = require('./index.js');
 
 var Ballot = caritat.Ballot;
 
