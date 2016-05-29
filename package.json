@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "rollup -c",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "rollup -c; mocha;"
   },
   "keywords": [
     "condorcet",
@@ -19,6 +19,8 @@
   },
   "devDependencies": {
     "babel-plugin-lodash": "^3.1.4",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
     "rollup": "^0.26.3",
     "rollup-plugin-babel": "^2.4.0",
     "rollup-plugin-node-resolve": "^1.5.0"
