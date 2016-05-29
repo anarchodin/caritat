@@ -34,8 +34,8 @@ function countVotes (oldState, ballots) {
 
   });
 
-  state.quota = (state.totalVotes - state.excess) * state.droopFactor;
-  
+  state.quota = (state.totalVotes - state.excess) * state.hbFactor;
+
   return state;
 }
 
@@ -66,6 +66,7 @@ function isConverged (state) {
 
 function declareElected (oldState) {
   var state = _.cloneDeep(oldState);
+  var potentials = [];
   var someoneElected = false;
   var electAll = false;
 
@@ -79,6 +80,20 @@ function declareElected (oldState) {
 
   if (state.seats === _.size(elected) + _.size(hopefuls)) {
     electAll = true;
+  }
+
+  potentials = _.keys(_.pickBy(state.candidates, candidate => {
+    if (candidate.status === 'hopeful' && candidate.votes > state.quota) {
+      return true;
+    } else {
+      return false;
+    }
+  }));
+
+  // if there are more over quota than there are seats, eliminate one randomly
+  // the mathematics involved should mean that suffices
+  if ((_.size(potentials) + state.electedCount) > state.seats) {
+    state = eliminate(state, _.sample(potentials));
   }
 
   _.forEach(_.filter(state.candidates, {status: 'hopeful'}), function (candidate) {
@@ -136,12 +151,12 @@ function eliminate (oldState, names) {
 
   return state;
 }
-  
+
 function eliminateLowest (state) {
   var lowestCandidate = _.sample(findLowest(state));
   return eliminate(state, lowestCandidate);
 }
-  
+
 function meek (election, config) {
   let ballots = election.ballots;
 
@@ -163,8 +178,8 @@ function meek (election, config) {
 
   state.excess = 0;
   state.totalVotes = _.sumBy(ballots, "count");
-  state.droopFactor = 1 / (config.seats + 1);
-  state.quota = state.totalVotes * state.droopFactor;
+  state.hbFactor = 1 / (config.seats + 1);
+  state.quota = state.totalVotes * state.hbFactor;
   state.electedCount = 0;
 
   while (state.electedCount < config.seats) {
@@ -184,7 +199,7 @@ function meek (election, config) {
     }
   });
   retVal.log = log;
-  
+
   return retVal;
 }
 
