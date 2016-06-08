@@ -119,7 +119,7 @@ function findLowest (state) {
   var votes = _.mapValues(active, 'votes');
 
   if (_.isEmpty(votes)) {
-    throw "No hopefuls remain.";
+    throw new Error("No hopefuls remain. Are there enough candidates?");
   }
 
   var lowestVote = _.min(_.values(votes));
@@ -139,7 +139,7 @@ function eliminate (oldState, names) {
       toEliminate.status = 'eliminated';
       toEliminate.weight = 0;
     } else {
-      throw "There's a problem here.";
+      throw new Error("Can't find candidate to be eliminated.");
     }
   }
 
@@ -173,7 +173,7 @@ function meek (election, config) {
     };
   });
 
-  if (!_.isNumber(config.seats)) { throw "The number of seats must be a number."; }
+  if (!_.isNumber(config.seats)) { throw new TypeError("The number of seats must be a number."); }
   state.seats = config.seats;
 
   state.excess = 0;
