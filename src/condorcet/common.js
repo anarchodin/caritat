@@ -7,7 +7,7 @@ export function ballotToPairs (ballot, candidates) {
   _.forEach(candidates, function (first) {
     result[first] = Object.create(null);
     _.forEach(candidates, function (second) {
-      if (ranks[first] < ranks[second]) {
+      if (ranks[first] < ranks[second] || !_.has(ranks, second)) {
         result[first][second] = voteWeight;
       } else {
         result[first][second] = 0;
