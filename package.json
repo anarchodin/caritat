@@ -1,6 +1,6 @@
 {
   "name": "caritat",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Election counting method library",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "lodash-es": "^4.12.0"
   },
   "devDependencies": {
-    "babel-plugin-lodash": "^3.1.4",
+    "babel-plugin-lodash": "~3.1.5",
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
     "rollup": "^0.26.3",
