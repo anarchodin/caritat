@@ -1,6 +1,19 @@
 import _ from 'lodash';
 
 function Ballot (votes, count) {
+  let validp = _.every(votes, vote => {
+    if (_.isString(vote)) return true;
+    if (_.isArray(vote)) {
+      if (_.every(vote, _.isString)) return true;
+    }
+
+    return false;
+  });
+
+  if (!validp) {
+    throw new TypeError('Invalid votes.');
+  }
+
   this.votes = _.cloneDeep(votes);
   this.ranks = ballotToRanks(votes);
   this.candidates = _.uniq(votes);
