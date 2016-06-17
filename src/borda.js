@@ -1,9 +1,6 @@
 import _ from 'lodash';
 
-function bordaScore (election) {
-  let ballots = election.ballots;
-  let candidates = election.candidates;
-
+function bordaScore (ballot, candidates) {
   var scores = Object.create(null);
   var maxScore = candidates.length - 1;
 
@@ -24,7 +21,10 @@ function bordaScore (election) {
 
 }
 
-function scores (ballots, candidates) {
+function scores (election) {
+  let ballots = election.ballots;
+  let candidates = election.candidates;
+
   var scores = Object.create(null);
   _.forEach(candidates, function (candidate) {
     scores[candidate] = 0;
@@ -37,11 +37,11 @@ function scores (ballots, candidates) {
   });
 
   return scores;
-    
+
 }
 
-function borda (ballots, candidates) {
-  var theScores = scores(ballots, candidates);
+function borda (election) {
+  var theScores = scores(election);
 
   var sorted = _.orderBy(_.toPairs(theScores), x => { return x[1] }, ['desc']);
   return _.map(sorted, x => { return x[0] });
