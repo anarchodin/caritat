@@ -29,11 +29,7 @@ export function pairsToStrongestPaths(pairs, candidates) {
     });
   });
 
-  result = result.sort(function (first, second) {
-    return paths[second][first] - paths[first][second];
-  })
-  
-  return result;
+  return paths;
 }
 
 function schulze (election) {
@@ -43,7 +39,13 @@ function schulze (election) {
   var pairs = ballotArrayToPairs(ballots, candidates);
   var paths = pairsToStrongestPaths(pairs, candidates);
 
-  return paths;
+  let result = _.clone(candidates);
+
+  result = result.sort(function (first, second) {
+    return paths[second][first] - paths[first][second];
+  })
+
+  return result;
 }
 
 export default schulze;
