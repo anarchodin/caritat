@@ -7,6 +7,8 @@ is provided:
 
 - Simple plurality winner
 
+- Approval voting
+
 - Instant Runoff Voting
 
 - Borda count

@@ -14,3 +14,19 @@ export function countFirstPrefs (ballots, candidates) {
 
   return firstPrefs;
 }
+
+export function countAppearances (ballots, candidates) {
+  var appearances = Object.create(null);
+
+  _.forEach(candidates, candidate => {
+    appearances[candidate] = 0;
+  });
+
+  _.forEach(ballots, ballot => {
+    _.forEach(ballot.candidates, candidate => {
+      appearances[candidate] += ballot.count;
+    })
+  });
+
+  return appearances;
+}
