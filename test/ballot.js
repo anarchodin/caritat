@@ -1,4 +1,4 @@
-var caritat = require('../index.js');
+var caritat = require('../dist/caritat');
 var Ballot = caritat.Ballot;
 
 var expect = require('chai').expect;

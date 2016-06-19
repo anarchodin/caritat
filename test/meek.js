@@ -1,4 +1,4 @@
-var caritat = require('../index');
+var caritat = require('../dist/caritat');
 var Election = caritat.Election;
 var meek = caritat.stv.meek;
 

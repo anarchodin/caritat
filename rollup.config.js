@@ -1,13 +1,20 @@
 import babel from 'rollup-plugin-babel';
-import npm from 'rollup-plugin-node-resolve';
+import uglify from 'rollup-plugin-uglify';
 
 export default {
   entry: 'src/caritat.js',
-  dest: 'index.js',
+  dest: 'dist/caritat.js',
   format: 'umd',
+  sourceMap: true,
+  external: ['lodash'],
+  globals: {
+    lodash: '_'
+  },
   moduleName: 'caritat',
   plugins: [
-    npm(),
-    babel({'plugins': [['lodash', {"id": "lodash-es"}]]})
+    babel({
+      'presets': ['es2015-rollup']
+    }),
+    uglify()
   ]
 };
