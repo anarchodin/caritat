@@ -21,13 +21,25 @@ function Ballot (votes, count) {
 }
 
 Ballot.prototype.eliminate = function eliminate (candidate) {
-  if (!_.isString(candidate)) return this;
+  let validp = false;
+  if (_.isString(candidate)) validp = true;
+  if (_.isArray(candidate) && _.every(candidate, _.isString)) validp = true;
+  if (!validp) return this;
+
+  let toEliminate = _.castArray(candidate);
 
   var newVotes = _.compact(_.map(this.votes, function (entry) {
-    if (entry === candidate) {
+    if (_.isArray(entry)) {
+      let diff = _.difference(entry,toEliminate);
+      if (diff.length > 1) {
+        return diff;
+      } else if (diff.length === 1) {
+        return diff[0];
+      } else {
+        return false;
+      }
+    } else if (toEliminate.indexOf(entry) !== -1) {
       return false;
-    } else if (_.isArray(entry)) {
-      return _.without(entry,candidate);
     } else {
       return entry;
     }
