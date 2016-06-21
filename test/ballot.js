@@ -16,7 +16,7 @@ describe('Ballot', function () {
   it('should allow tied votes', function () {
     var goodBallots = function () {
       new Ballot([['foo', 'bar'], 'smu']);
-    }
+    };
 
     expect(goodBallots).not.to.throw(TypeError);
 

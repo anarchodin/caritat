@@ -43,7 +43,7 @@ function schulze (election) {
 
   result = result.sort(function (first, second) {
     return paths[second][first] - paths[first][second];
-  })
+  });
 
   return result;
 }

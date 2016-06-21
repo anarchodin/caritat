@@ -25,7 +25,7 @@ export function countAppearances (ballots, candidates) {
   _.forEach(ballots, ballot => {
     _.forEach(ballot.candidates, candidate => {
       appearances[candidate] += ballot.count;
-    })
+    });
   });
 
   return appearances;

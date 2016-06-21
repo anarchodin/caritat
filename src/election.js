@@ -60,7 +60,7 @@ Object.defineProperty(Election.prototype, 'candidates', {
           return [vote];
         }
       })));
-    }   
+    }
   },
   enumerable: true,
   configurable: false
@@ -99,6 +99,6 @@ Election.prototype.addBallot = function addBallot (ballot) {
     this.ballots.push(ballot);
     return true;
   }
-}
+};
 
 export default Election;

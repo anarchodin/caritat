@@ -17,7 +17,7 @@ function countVotes (oldState, ballots) {
           totalWeight += state.candidates[name].weight;
         });
 
-        if (totalWeight == 0) { return false; }
+        if (totalWeight === 0) { return false; }
 
         _.forEach(candidate, function (name) {
           var portion = state.candidates[name].weight / totalWeight;

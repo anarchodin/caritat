@@ -28,6 +28,6 @@ export function winner (election) {
   } else {
     return false;
   }
-};
+}
 
 export {common, schulze};

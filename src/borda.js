@@ -43,8 +43,8 @@ function scores (election) {
 function borda (election) {
   var theScores = scores(election);
 
-  var sorted = _.orderBy(_.toPairs(theScores), x => { return x[1] }, ['desc']);
-  return _.map(sorted, x => { return x[0] });
+  var sorted = _.orderBy(_.toPairs(theScores), x => x[1], ['desc']);
+  return _.map(sorted, x => x[0]);
 }
 
 export default borda;

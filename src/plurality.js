@@ -11,9 +11,9 @@ function winner (election, config) {
 
   var firstPrefs = countFirstPrefs(ballots, candidates);
 
-  var sorted = _.orderBy(_.toPairs(firstPrefs), x => { return x[1] }, ['desc']);
+  var sorted = _.orderBy(_.toPairs(firstPrefs), x => x[1], ['desc']);
 
-  return _.take(_.map(sorted, x => { return x[0] }), config.seats);
+  return _.take(_.map(sorted, x => x[0]), config.seats);
 }
 
 export default winner;

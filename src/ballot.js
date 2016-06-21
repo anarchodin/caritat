@@ -46,7 +46,7 @@ Ballot.prototype.eliminate = function eliminate (candidate) {
   }));
 
   return new Ballot(newVotes, this.count);
-}
+};
 
 Ballot.prototype.isValid = function isValid (config) {
   config = _.defaults(config, {
