@@ -2,8 +2,12 @@ import _ from 'lodash';
 
 import {countFirstPrefs} from './utils';
 
-function irv (election) {
+function irv (election, config) {
   var curBallots, curCandidates, voteCount, firstPrefs, ratios, winner, loser;
+
+  config = _.defaults(config, {
+    threshold: 0.5
+  });
 
   curBallots = election.ballots;
   curCandidates = election.candidates;
@@ -14,7 +18,7 @@ function irv (election) {
     firstPrefs = countFirstPrefs(curBallots, curCandidates);
     ratios = _.mapValues(firstPrefs, votes => votes / voteCount);
 
-    winner = _.findKey(ratios, function (x) {return x > 0.5; });
+    winner = _.findKey(ratios, function (x) {return x > config.threshold; });
     if (!!winner) return winner;
 
     loser = _.map(_.orderBy(_.toPairs(firstPrefs), x => x[1], ['asc']), x => x[0])[0];
