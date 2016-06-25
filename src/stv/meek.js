@@ -41,7 +41,7 @@ function countVotes (oldState, ballots) {
 
 function updateWeights (oldState) {
   var state = _.cloneDeep(oldState);
-  _.forEach(state.candidates, function (candidate, name) {
+  _.forEach(state.candidates, function (candidate) {
     if (candidate.status === 'elected') {
       var ratio = state.quota / candidate.votes;
       candidate.weight *= ratio;

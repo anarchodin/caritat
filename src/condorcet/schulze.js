@@ -4,7 +4,6 @@ import {ballotArrayToPairs} from './common';
 
 export function pairsToStrongestPaths(pairs, candidates) {
   var paths = Object.create(null);
-  var result = _.clone(candidates);
 
   _.forEach(candidates, function (first) {
     paths[first] = Object.create(null);

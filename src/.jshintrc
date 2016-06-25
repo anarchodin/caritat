@@ -1,6 +1,6 @@
 {
   "strict": "implied",
-  "undef": "true",
-  "unused": "true",
+  "undef": true,
+  "unused": true,
   "esversion": 6
 }
