@@ -6,7 +6,9 @@ function irv (election, config) {
   var curBallots, curCandidates, voteCount, firstPrefs, ratios, winner, loser;
 
   config = _.defaults(config, {
-    threshold: 0.5
+    threshold: 0.5,
+    tiebreak: _.sample,
+    log: _.noop
   });
 
   curBallots = election.ballots;
@@ -22,6 +24,11 @@ function irv (election, config) {
     if (!!winner) return winner;
 
     loser = _.map(_.orderBy(_.toPairs(firstPrefs), x => x[1], ['asc']), x => x[0])[0];
+    config.log({
+      type: 'eliminated',
+      candidate: loser,
+      state: firstPrefs
+    });
 
     curBallots = _.compact(_.map(curBallots, function (ballot) {
       return ballot.eliminate(loser);
