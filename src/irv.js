@@ -21,19 +21,47 @@ function irv (election, config) {
     ratios = _.mapValues(firstPrefs, votes => votes / voteCount);
 
     winner = _.findKey(ratios, function (x) {return x > config.threshold; });
-    if (!!winner) return winner;
+    if (!!winner) {
+      config.log({
+        type: 'elected',
+        candidate: winner,
+        state: firstPrefs
+      });
+      return winner;
+    }
 
-    loser = _.map(_.orderBy(_.toPairs(firstPrefs), x => x[1], ['asc']), x => x[0])[0];
-    config.log({
-      type: 'eliminated',
-      candidate: loser,
-      state: firstPrefs
+    let lowestVote = _.min(_.values(firstPrefs));
+    let lowestCandidates = _.keys(_.pickBy(firstPrefs, x => x === lowestVote));
+
+    if (_.size(lowestCandidates) === 1) {
+      loser = lowestCandidates[0];
+    } else if (lowestVote === 0){
+      // special case for candidates with no votes: they _all_ go
+      // this can only happen in the first round
+      loser = lowestCandidates;
+    } else {
+      loser = config.tiebreak(lowestCandidates);
+      config.log({
+        type: 'tiebreak',
+        candidate: loser,
+        tied: lowestCandidates,
+        state: firstPrefs
+      });
+    }
+
+    _.forEach(_.castArray(loser), loser => {
+      config.log({
+        type: 'eliminated',
+        candidate: loser,
+        state: firstPrefs
+      });
+
+      curCandidates = _.without(curCandidates, loser);
     });
 
     curBallots = _.compact(_.map(curBallots, function (ballot) {
-      return ballot.eliminate(loser);
+      return ballot.eliminate(_.castArray(loser));
     }));
-    curCandidates = _.without(curCandidates, loser);
 
   }
 }
