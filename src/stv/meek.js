@@ -173,7 +173,7 @@ function meek (election, config) {
     };
   });
 
-  if (!_.isNumber(config.seats)) { throw new TypeError("The number of seats must be a number."); }
+  if (!_.isInteger(config.seats)) { throw new TypeError("The number of seats must be an integer."); }
   state.seats = config.seats;
 
   state.excess = 0;
