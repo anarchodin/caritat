@@ -2,18 +2,22 @@ import _ from 'lodash';
 
 import {ballotArrayToPairs} from './common';
 
-export function pairsToStrongestPaths(pairs, candidates) {
+let margin = (x, y) => x - y;
+
+export function pairsToStrongestPaths(pairs, candidates, strength = margin) {
   var paths = Object.create(null);
 
   _.forEach(candidates, function (first) {
     paths[first] = Object.create(null);
     var others = _.without(candidates, first);
     _.forEach(others, function (second) {
+      let linkStrength = 0;
+
+      // register only _wins_
       if (pairs[first][second] > pairs[second][first]) {
-        paths[first][second] = pairs[first][second];
-      } else {
-        paths[first][second] = 0;
+        linkStrength = strength(pairs[first][second],pairs[second][first]);
       }
+      paths[first][second] = linkStrength;
     });
   });
 
@@ -31,20 +35,52 @@ export function pairsToStrongestPaths(pairs, candidates) {
   return paths;
 }
 
-function schulze (election) {
+function schulze (election, config) {
+  config = _.defaults(config, {
+    log: _.noop,
+    tiebreak: _.sample,
+    seats: 1
+  });
+
   let ballots = election.ballots;
   let candidates = election.candidates;
 
   var pairs = ballotArrayToPairs(ballots, candidates);
-  var paths = pairsToStrongestPaths(pairs, candidates);
+  var paths = pairsToStrongestPaths(pairs, candidates, config.strength);
 
   let result = _.clone(candidates);
 
   result = result.sort(function (first, second) {
-    return paths[second][first] - paths[first][second];
+    let diff = paths[second][first] - paths[first][second];
+    if (diff === 0) {
+      // tiebreak needed
+      let loser = config.tiebreak([first, second]);
+      config.log({
+        type: 'tiebreak',
+        candidate: loser,
+        tied: [first, second]
+      });
+
+      diff = loser === first ? 1 : -1;
+    }
+
+    return diff;
+
   });
 
-  return result;
+  if (config.seats === 1) {
+    return result[0];
+  } else {
+    let winners = _.take(result, config.seats);
+    _.forEach(winners, winner => {
+      config.log({
+        type: 'elected',
+        candidate: winner
+      });
+    });
+
+    return winners;
+  }
 }
 
 export default schulze;
